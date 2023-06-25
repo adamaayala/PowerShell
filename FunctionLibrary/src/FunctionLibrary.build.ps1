@@ -326,8 +326,8 @@ Add-BuildTask DevCC {
 Add-BuildTask CreateHelpStart {
     Write-Build White '      Performing all help related actions.'
 
-    Write-Build Gray '           Importing platyPS v0.12.0 ...'
-    Import-Module platyPS -RequiredVersion 0.12.0 -ErrorAction Stop
+    Write-Build Gray '           Importing platyPS v0.14.2 ...'
+    Import-Module platyPS -RequiredVersion 0.14.2 -ErrorAction Stop
     Write-Build Gray '           ...platyPS imported successfully.'
 } #CreateHelpStart
 
@@ -362,10 +362,10 @@ Add-BuildTask CreateMarkdownHelp -After CreateHelpStart {
     }
     # Replace each missing element we need for a proper generic module page .md file
     $ModulePageFileContent = Get-Content -Raw $ModulePage
-    $ModulePageFileContent = $ModulePageFileContent -replace '{{Manually Enter Description Here}}', $script:ModuleDescription
+    $ModulePageFileContent = $ModulePageFileContent -replace '{{ Fill in the Description }}', $script:ModuleDescription
     $script:FunctionsToExport | ForEach-Object {
         Write-Build DarkGray "             Updating definition for the following function: $($_)"
-        $TextToReplace = "{{Manually Enter $($_) Description Here}}"
+        $TextToReplace = "{{ Fill in the$($_)  Description }} "
         $ReplacementText = (Get-Help -Detailed $_).Synopsis
         $ModulePageFileContent = $ModulePageFileContent -replace $TextToReplace, $ReplacementText
     }
